@@ -1,0 +1,231 @@
+<title>Torneo Estelar Sencillo</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bangers&family=Baloo+2:wght@500;700&display=swap">
+<style>
+/* Layout: una sola tarjeta centrada sobre un cielo estrellado; todo visible de un vistazo. */
+:root{
+  --sky:#0a0720;
+  --card:#1b0f45;
+  --ink:#f7f4ff;
+  --muted:#bdb4ea;
+  --aura:#36e4ff;
+  --ki:#ff3d9a;
+  --gold:#ffd23f;
+  --blue:#1e6bff;
+  --blue-2:#7fb0ff;
+  --line:rgba(189,180,234,.25);
+  --f-display:"Bangers","Impact","Arial Black",sans-serif;
+  --f-body:"Baloo 2","Trebuchet MS",system-ui,sans-serif;
+  color-scheme:dark;
+}
+body{min-height:100vh;margin:0;display:grid;place-items:center;padding-inline:16px;padding-block:32px;box-sizing:border-box;
+  font-family:var(--f-body);font-size:17px;color:var(--ink);
+  background:
+    radial-gradient(1.5px 1.5px at 12% 18%,#fff,transparent),radial-gradient(1px 1px at 78% 12%,#fff,transparent),
+    radial-gradient(1.5px 1.5px at 35% 72%,#fff,transparent),radial-gradient(1px 1px at 88% 64%,#fff,transparent),
+    radial-gradient(1px 1px at 55% 30%,#fff,transparent),radial-gradient(1.5px 1.5px at 20% 90%,#fff,transparent),
+    radial-gradient(1px 1px at 65% 88%,#fff,transparent),radial-gradient(1px 1px at 5% 50%,#fff,transparent),
+    radial-gradient(50% 40% at 50% 0%,rgba(255,61,154,.25),transparent 70%),
+    radial-gradient(50% 40% at 50% 100%,rgba(54,228,255,.2),transparent 70%),
+    var(--sky);
+}
+.card{width:100%;max-width:420px;background:var(--card);border:2px solid var(--line);border-radius:22px;padding:28px 22px;box-sizing:border-box;
+  display:grid;gap:18px;justify-items:center;text-align:center;box-shadow:0 0 50px rgba(54,228,255,.15)}
+.hero{width:120px;height:auto;animation:float 2.4s ease-in-out infinite;filter:drop-shadow(0 0 14px rgba(54,228,255,.7))}
+@keyframes float{50%{transform:translateY(-6px)}}
+.tag{font-family:var(--f-display);letter-spacing:.12em;font-size:.95rem;color:var(--sky);background:var(--gold);padding:2px 12px 0;transform:skewX(-10deg)}
+h1{font-family:var(--f-display);font-weight:400;font-size:clamp(2.4rem,11vw,3.2rem);line-height:.95;margin:0;letter-spacing:.03em;text-wrap:balance;
+  text-shadow:3px 3px 0 var(--ki)}
+h1 em{font-style:normal;color:var(--gold)}
+p{margin:0;line-height:1.45;color:var(--muted)}
+p b{color:var(--ink)}
+.count{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;width:100%}
+.count div{background:var(--sky);border:2px solid var(--line);border-radius:12px;padding:8px 0 4px}
+.count div:first-child{border-color:var(--aura)}
+.count b{display:block;font-family:var(--f-display);font-weight:400;font-size:2rem;line-height:1;font-variant-numeric:tabular-nums}
+.count span{font-size:.7rem;letter-spacing:.12em;text-transform:uppercase;color:var(--muted)}
+.info{width:100%;display:grid;gap:6px;text-align:left;border-top:2px dashed var(--line);border-bottom:2px dashed var(--line);padding-block:12px}
+.info div{display:flex;justify-content:space-between;gap:12px}
+.info small{font-size:.75rem;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);padding-top:3px}
+.info strong{text-align:right}
+form{width:100%;display:grid;gap:10px}
+input{font:inherit;color:var(--ink);background:var(--sky);border:2px solid var(--line);border-radius:12px;padding:10px 12px}
+.btn{font-family:var(--f-display);font-size:1.3rem;letter-spacing:.05em;border:0;border-radius:12px;cursor:pointer;padding:11px 16px 8px;
+  color:var(--sky);background:var(--aura);box-shadow:0 4px 0 var(--ki);text-decoration:none;text-align:center}
+.btn:active{transform:translateY(3px);box-shadow:0 1px 0 var(--ki)}
+.link{background:none;border:0;color:var(--muted);font:inherit;font-size:.9rem;text-decoration:underline;cursor:pointer}
+.btn:focus-visible,.link:focus-visible,input:focus-visible{outline:3px solid var(--gold);outline-offset:2px}
+.err{color:var(--ki);font-size:.9rem;min-height:1.2em}
+/* Ubicación y vestimenta */
+.extras{display:grid;grid-template-columns:1fr 1fr;gap:10px;width:100%}
+.pill{display:flex;align-items:center;gap:10px;text-align:left;padding:10px 12px;border-radius:14px;border:2px solid var(--line);background:var(--sky);color:var(--ink);text-decoration:none;min-width:0}
+.pill svg{width:28px;height:28px;flex:none;color:var(--gold)}
+.pill span{font-weight:700;line-height:1.15;min-width:0}
+.pill small{display:block;font-weight:500;font-size:.68rem;letter-spacing:.1em;text-transform:uppercase;color:var(--muted)}
+a.pill:hover{border-color:var(--gold)}
+a.pill:focus-visible{outline:3px solid var(--gold);outline-offset:2px}
+.dress{border-color:var(--blue);background:linear-gradient(135deg,rgba(30,107,255,.35),rgba(30,107,255,.1))}
+.dress svg{color:var(--blue-2)}
+@media (max-width:360px){.extras{grid-template-columns:1fr}}
+
+/* Llegada en nave espacial */
+#intro{position:fixed;inset:0;z-index:5;display:grid;place-items:center;background:inherit;transition:opacity .7s .5s}
+#intro.gone{opacity:0;pointer-events:none}
+#ship{background:none;border:0;padding:0;cursor:pointer;display:grid;justify-items:center;gap:14px;color:var(--ink);font:inherit;
+  animation:arrive 2.2s cubic-bezier(.2,.8,.3,1) both}
+#ship svg{width:min(190px,48vw);height:auto;animation:hover 1.8s 2.2s ease-in-out infinite;filter:drop-shadow(0 0 22px rgba(54,228,255,.55))}
+#ship .cta{font-family:var(--f-display);font-size:1.5rem;letter-spacing:.06em;color:var(--gold);animation:blink 1.2s 2.2s infinite;opacity:0}
+#ship:focus-visible{outline:3px solid var(--gold);outline-offset:10px;border-radius:20px}
+.thrust{transform-origin:100px 168px;animation:thrust .12s infinite alternate}
+@keyframes arrive{0%{transform:translate(-70vw,70vh) rotate(45deg) scale(.3)}70%{transform:translate(0,-12px) rotate(-6deg) scale(1.05)}100%{transform:none}}
+@keyframes hover{50%{transform:translateY(-10px)}}
+@keyframes blink{0%,100%{opacity:1}50%{opacity:.35}}
+@keyframes thrust{to{transform:scaleY(1.35)}}
+#intro.launch #ship{animation:leave .8s cubic-bezier(.6,0,.9,.4) forwards}
+#intro.launch .cta{display:none}
+@keyframes leave{to{transform:translateY(-120vh) scale(.4)}}
+.card{transition:opacity .6s,transform .7s cubic-bezier(.2,.8,.3,1)}
+body.closed .card{opacity:0;transform:translateY(60px) scale(.9)}
+
+@media (prefers-reduced-motion:reduce){
+  .hero,#ship,#ship svg,.thrust,#ship .cta{animation:none!important;opacity:1}
+  #intro{transition-delay:0s}
+}
+</style>
+
+<div id="intro">
+  <button id="ship" type="button" aria-label="Toca la nave para abrir la invitación">
+    <svg viewBox="0 0 200 200" aria-hidden="true">
+      <!-- propulsión -->
+      <g class="thrust"><path d="M80 150 Q100 200 120 150Z" fill="#ff3d9a"/><path d="M90 150 Q100 182 110 150Z" fill="#ffd23f"/></g>
+      <!-- aletas -->
+      <path d="M68 110 L36 150 L70 146Z" fill="#0b3a8c"/>
+      <path d="M132 110 L164 150 L130 146Z" fill="#0b3a8c"/>
+      <!-- cuerpo -->
+      <path d="M100 8 Q140 40 138 110 L132 150 L68 150 L62 110 Q60 40 100 8Z" fill="#1e6bff"/>
+      <path d="M100 8 Q122 26 130 52 L70 52 Q78 26 100 8Z" fill="#ffd23f"/>
+      <rect x="64" y="132" width="72" height="10" fill="#ffd23f"/>
+      <!-- ventana -->
+      <circle cx="100" cy="88" r="22" fill="#0a0720" stroke="#f7f4ff" stroke-width="6"/>
+      <circle cx="100" cy="88" r="14" fill="#36e4ff"/>
+      <circle cx="94" cy="82" r="4" fill="#fff"/>
+      <path d="M100 150 L100 112" stroke="#0b3a8c" stroke-width="4"/>
+    </svg>
+    <span class="cta">¡Toca la nave!</span>
+  </button>
+</div>
+
+<main class="card">
+  <svg class="hero" viewBox="0 0 200 210" role="img" aria-label="Guerrero estelar">
+    <path d="M112 64 Q150 58 178 74 Q160 78 170 92 Q140 80 116 76Z" fill="#ff3d9a"/>
+    <path d="M78 140 L62 196 L82 198 L96 150Z" fill="#0b3a8c"/>
+    <path d="M122 140 L138 196 L118 198 L104 150Z" fill="#0b3a8c"/>
+    <rect x="58" y="190" width="28" height="12" rx="4" fill="#ffd23f"/>
+    <rect x="114" y="190" width="28" height="12" rx="4" fill="#ffd23f"/>
+    <path d="M70 80 Q100 70 130 80 L134 142 Q100 150 66 142Z" fill="#1e6bff"/>
+    <circle cx="100" cy="104" r="9" fill="#36e4ff"/><circle cx="100" cy="104" r="4" fill="#fff"/>
+    <rect x="66" y="128" width="68" height="10" fill="#ffd23f"/>
+    <path d="M72 84 Q46 96 50 118 L62 116 Q60 102 80 96Z" fill="#1e6bff"/>
+    <path d="M128 84 Q154 96 150 118 L138 116 Q140 102 120 96Z" fill="#1e6bff"/>
+    <circle cx="55" cy="122" r="11" fill="#ffd23f"/><circle cx="145" cy="122" r="11" fill="#ffd23f"/>
+    <path d="M80 70 Q100 80 120 70 L122 80 Q100 90 78 80Z" fill="#ff3d9a"/>
+    <circle cx="100" cy="46" r="28" fill="#f7f4ff"/>
+    <path d="M72 46 Q72 18 100 18 Q128 18 128 46Z" fill="#0b3a8c"/>
+    <rect x="76" y="40" width="48" height="14" rx="7" fill="#0a0720"/>
+    <rect x="80" y="43" width="16" height="7" rx="3.5" fill="#36e4ff"/>
+    <rect x="104" y="43" width="16" height="7" rx="3.5" fill="#36e4ff"/>
+    <path d="M100 18 L94 4 L106 4Z" fill="#ffd23f"/>
+  </svg>
+
+  <span class="tag">¡Estás invitado!</span>
+  <h1>Torneo de <em>Guerreros Estelares</em></h1>
+  <p><b id="name">Guerrero</b> cumple <b id="age">7</b> años y te reta a la batalla más épica del universo.</p>
+
+  <div class="count" aria-live="polite">
+    <div><b id="d">00</b><span>Días</span></div>
+    <div><b id="h">00</b><span>Horas</span></div>
+    <div><b id="m">00</b><span>Min</span></div>
+    <div><b id="s">00</b><span>Seg</span></div>
+  </div>
+
+  <div class="info">
+    <div><small>Fecha</small><strong>Sábado 14 de noviembre</strong></div>
+    <div><small>Hora</small><strong>6:00 p. m.</strong></div>
+    <div><small>Lugar</small><strong id="place">Lugar por confirmar</strong></div>
+  </div>
+
+  <div class="extras">
+    <a class="pill" id="mapLink" href="#" target="_blank" rel="noopener">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2a7 7 0 0 0-7 7c0 5 7 13 7 13s7-8 7-13a7 7 0 0 0-7-7Zm0 9.5A2.5 2.5 0 1 1 12 6.5a2.5 2.5 0 0 1 0 5Z" fill="currentColor"/></svg>
+      <span><small>Punto de aterrizaje</small>Ver ubicación</span>
+    </a>
+    <div class="pill dress">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 3 3 6l2 5 2-1v11h10V10l2 1 2-5-5-3a4 4 0 0 1-8 0Z" fill="currentColor"/></svg>
+      <span><small>Código de vestimenta</small>¡Ven de azul!</span>
+    </div>
+  </div>
+
+  <form id="rsvp" novalidate>
+    <input id="guest" type="text" placeholder="Tu nombre" aria-label="Tu nombre" autocomplete="name">
+    <span class="err" id="err" role="alert"></span>
+    <a class="btn" id="yesBtn" href="#" target="_blank" rel="noopener">⚡ ¡Confirmo que voy!</a>
+    <a class="link" id="noBtn" href="#" target="_blank" rel="noopener">No podré ir</a>
+  </form>
+</main>
+
+<script>
+/* ===== EDITA AQUÍ ===== */
+const CONFIG = {
+  nombre: "Guerrero",
+  edad: 7,
+  fecha: "2026-11-14T18:00:00-05:00", // 14 nov, 6:00 p. m. (Lima)
+  lugar: "Lugar por confirmar",
+  mapa: "",     // link de Google Maps; vacío = busca el lugar en Maps
+  whatsapp: ""  // ej. "51987654321"; vacío = elegir contacto
+};
+/* ====================== */
+
+const $ = id => document.getElementById(id);
+
+/* Llegada: la nave entra y, al tocarla, despega y muestra la tarjeta */
+document.body.classList.add("closed");
+$("ship").addEventListener("click", () => {
+  $("intro").classList.add("launch", "gone");
+  setTimeout(() => document.body.classList.remove("closed"), 500);
+  setTimeout(() => $("intro").hidden = true, 1300);
+});
+
+$("mapLink").href = CONFIG.mapa || "https://www.google.com/maps/search/?api=1&query=" + encodeURIComponent(CONFIG.lugar);
+$("name").textContent = CONFIG.nombre;
+$("age").textContent = CONFIG.edad;
+$("place").textContent = CONFIG.lugar;
+
+const target = new Date(CONFIG.fecha);
+const pad = n => String(n).padStart(2, "0");
+function tick(){
+  const t = Math.max(0, target - new Date());
+  $("d").textContent = pad(Math.floor(t / 864e5));
+  $("h").textContent = pad(Math.floor(t / 36e5) % 24);
+  $("m").textContent = pad(Math.floor(t / 6e4) % 60);
+  $("s").textContent = pad(Math.floor(t / 1e3) % 60);
+}
+tick(); setInterval(tick, 1000);
+
+/* Los botones son enlaces reales a WhatsApp; el mensaje se actualiza al escribir el nombre */
+const wa = text => `https://wa.me/${CONFIG.whatsapp.replace(/\D/g, "")}?text=${encodeURIComponent(text)}`;
+function update(){
+  const name = $("guest").value.trim() || "un invitado";
+  $("yesBtn").href = wa(`¡Hola! Soy ${name} y confirmo que voy al cumpleaños de ${CONFIG.nombre} el sábado 14 de noviembre a las 6:00 p. m. ⚡`);
+  $("noBtn").href = wa(`¡Hola! Soy ${name}. No podré ir al cumpleaños de ${CONFIG.nombre}. ¡Feliz cumpleaños! 🎉`);
+}
+function check(e){
+  if (!$("guest").value.trim()) { e.preventDefault(); $("err").textContent = "Escribe tu nombre primero."; $("guest").focus(); }
+  else $("err").textContent = "";
+}
+$("guest").addEventListener("input", update);
+$("yesBtn").addEventListener("click", check);
+$("noBtn").addEventListener("click", check);
+$("rsvp").addEventListener("submit", e => { e.preventDefault(); if ($("guest").value.trim()) $("yesBtn").click(); else check(e); });
+update();
+</script>
